@@ -3,11 +3,12 @@ import model.Ball;
 
 public class Main {
 
-	static Animation animation;
+	static Animation animation, animation2;
 
 	public static void main(String[] args) {
 
 		animation = new Animation("Animation");
+
 	}
 
 }

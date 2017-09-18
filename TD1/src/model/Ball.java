@@ -2,6 +2,8 @@ package model;
 
 import controler.Animation;
 
+import static java.lang.Math.round;
+
 public class Ball {
 
 	// Taille de la balle

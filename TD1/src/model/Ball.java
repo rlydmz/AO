@@ -165,4 +165,12 @@ public class Ball {
         this.t = t;
     }
 
+    public void reverseSpeed(){
+            x0 = x;
+            y0 = y;
+            t = 0;
+            vx0 = -vx;
+            vy0 = vy;
+    }
+
 }

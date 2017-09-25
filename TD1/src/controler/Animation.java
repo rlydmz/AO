@@ -19,15 +19,16 @@ public class Animation implements ActionListener {
 	private Panel panel;
 	private Ball ball;
 	private Ball ball2;
+	private boolean hasCollided;
 	// Objet permettant de provoquer une animation à temps réguliers
 	private AnimationTimer timer;
 
 	public Animation(String title){
+	    hasCollided = false;
 		ball = new Ball();
 		ball2 = new Ball();
-		ball2.setX(4);
-		ball2.setX0(4);
-		ball.setVx(2);
+		ball2.setVx0(-2);
+		ball.setX0(1);
 		ball.setVx0(2);
 		panel = new Panel();
 		viewBall = new ViewBall();
@@ -39,12 +40,25 @@ public class Animation implements ActionListener {
 		timer.start();
 	}
 
+    public double distance(Ball b1, Ball b2){
+        double dst = Math.sqrt(Math.pow(b1.getX()-b2.getX(),2) + Math.pow(b1.getY()-b2.getY(), 2));
+        return dst;
+    }
+
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		ball.step();
 		ball2.step();
-		System.out.println("DIFF = " + (ball.getX()-ball2.getX()));
-		testCollision(ball, ball2);
+		if(distance(ball, ball2) >= Ball.WIDTH){
+		    hasCollided = false;
+        }
+		if(distance(ball, ball2) <= Ball.WIDTH && hasCollided == false){
+		    System.out.println("collision");
+		    ball.reverseSpeed();
+		    ball2.reverseSpeed();
+		    hasCollided = true;
+        }
 		viewBall.setXY(ball.getX(), ball.getY(),
 				Ball.WIDTH, Ball.HEIGHT, 
 				Panel.SCALE, Panel.MARGIN);
@@ -53,12 +67,5 @@ public class Animation implements ActionListener {
                 Panel.SCALE, Panel.MARGIN);
 		viewFrame.panel.repaint();
 	}
-
-	public void testCollision(Ball b1, Ball b2){
-	    if(round(b1.getX(),1) == round(b2.getX(),1)){
-	        b1.setVx(5);
-        }
-    }
-
 
 }
